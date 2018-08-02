@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}base{% endblock %}</title>
+    {#通过{% block title %}base{% endblock %}，设置了一个动态的页面title块#}
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    {% block css %} {% endblock %}
+{#   •通过{% block css %}{% endblock %}，设置了一个动态的css加载块；#}
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#my-nav" aria-expanded="false">
+                <span class="sr-only">切换导航条</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Mysite</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="my-nav">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/login/index/">主页</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.is_login %}
+                    <li><a href="#">当前在线:{{ request.session.user_name }}</a> </li>
+                    <li><a href="/login/logout">登出</a> </li>
+                {% else %}
+                <li><a href="/login/login/">登录</a> </li>
+                <li><a href="/login/register/">注册</a> </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% block content %}{% endblock %}
+{#•通过{% block content %}{% endblock %}，为具体页面的主体内容留下接口；#}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"
+</body>
+</html>
